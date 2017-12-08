@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import argparse
-import sys
 from config import *
+import time
+import sys
 
 
+#TODO debug below function
 def oneArgParse(key):
     parser = argparse.ArgumentParser()
     parser.add_argument(key)
@@ -17,7 +19,10 @@ def oneArgParse(key):
 #        return args.key
 
 
-def askForInput(prompt):
+def timed_askForInput(prompt):
     sys.stdout.write("{}>".format(prompt))
+    begin = time.time()
     inp = sys.stdin.readline()
-    return inp
+    end = time.time()
+    elapsed = end - begin
+    return inp, elapsed

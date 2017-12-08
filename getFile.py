@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from urllib2 import urlopen
-from bs4 import BeautifulSoup
 from argsParseSimple import *
 
 

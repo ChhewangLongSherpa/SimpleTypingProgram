@@ -18,6 +18,6 @@ def oneArgParse(key):
 
 
 def askForInput(prompt):
-    sys.stdout.write("{} >".format(prompt))
+    sys.stdout.write("{}>".format(prompt))
     inp = sys.stdin.readline()
     return inp

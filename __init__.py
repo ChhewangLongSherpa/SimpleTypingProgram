@@ -69,5 +69,3 @@ if __name__ == "__main__":
             break
         print "Non-Matching: {}".format(mistyped(a, b))
         continue
-
-                #sysout("\nWords per time: {}".format(len(line) / ti))

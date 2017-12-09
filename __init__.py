@@ -49,8 +49,17 @@ if __name__ == "__main__":
 #    print urlRead(link)
 #    print askForInput("link")
 
-    line = "Begin the morning by saying to thyself, I shall meet with the"
+#    line = "Begin the morning by saying to thyself, I shall meet with the"
+    
+    #openfiles content - May want to shift this to function
+    with open('README.md') as f:
+	lines = f.readlines()
+    
+    #Remove whitespace like '\n' at the end of each line
+    lines = [x.strip() for x in lines]
+    line = lines[0]
 
+    #TODO - Shift the below code to a boolean function
     while 1:
         sysout(line)
         if TIMED:

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import sys
+import os
 from getFile import *
 
 
-def askForInput(prompt):
+def ask_for_input(prompt):
     sys.stdout.write("{}>".format(prompt))
     inp = sys.stdin.readline()
     return inp
@@ -13,7 +14,8 @@ def sysout(line):
     sys.stdout.write(line)
 
 
-def lineNposMatch(arraySource, array1):
+def line_n_pos_Match(arraySource, array1):
+    #METHOD PURPOSE: For checking if the input and line from file match
     #If the number of elements in the array match
     if set(arraySource) & set(array1):
         #Do the two array have the same values in the same order
@@ -42,39 +44,56 @@ def mistyped(a, b):
     return t
 
 
+def file_to_array(file):
+    #https://codereview.stackexchange.com/questions/145126/
+    #open-a-text-file-and-remove-any-blank-lines
+    if not os.path.isfile(file):
+        print '{} as file does not exist!!'.format(f)
+        return
+    with open(file) as filehandle:
+        lines = filehandle.readlines()
+    lines = filter(lambda x: x.strip(), lines)
+    return lines
+
+
+def Main_Typing_Loop(line):
+    #METHOD PURPOSE: 2 Modes: Timed & Non Timed
+    #Loop through file
+    timed = "\nt>"
+    not_timed = "\n>"
+    while 1:
+        if TIMED:
+            sysout("{} {}".format(timed, line))
+            sysin, ti = timed_askForInput(timed)
+        else:
+            sysout("{} {}".format(not_timed, line))
+            sysin = ask_for_input(not_timed)
+        a = line.split()
+        b = sysin.split()
+        if line_n_pos_Match(a, b):
+            if TIMED:
+                #sysout("\nTime: {}".format(ti))
+                #sysout("\nWords: {}".format(len(a)))
+                sysout("\nWords/Time: {}".format(len(a) / ti))
+                sysout("\n")
+                return (len(a) / ti)
+            break
+            return
+        print "Non-Matching: {}".format(mistyped(a, b))
+        continue
+
+
 if __name__ == "__main__":
 #    link = "http://classics.mit.edu/Antoninus/meditations.mb.txt"
 #    link = "http://classics.mit.edu/Herodotus/history.mb.txt"
 #    link = linkCheck('-w')
 #    print urlRead(link)
-#    print askForInput("link")
+#    print ask_for_input("link")
 
 #    line = "Begin the morning by saying to thyself, I shall meet with the"
-    
-    #openfiles content - May want to shift this to function
-    with open('README.md') as f:
-	lines = f.readlines()
-    
-    #Remove whitespace like '\n' at the end of each line
-    lines = [x.strip() for x in lines]
-    line = lines[0]
 
-    #TODO - Shift the below code to a boolean function
-    while 1:
-        sysout(line)
-        if TIMED:
-            sysin, ti = timed_askForInput("\nt>")
-        else:
-            sysin = askForInput("\n>")
-        a = line.split()
-        b = sysin.split()
-        if lineNposMatch(a, b):
-            if TIMED:
-                sysout("\nTime: {}".format(ti))
-                sysout("\nWords: {}".format(len(a)))
-                sysout("\nWords/Time: {}".format(len(a) / ti))
-                sysout("\n")
-                #hello
-            break
-        print "Non-Matching: {}".format(mistyped(a, b))
-        continue
+    lines = file_to_array('Meditations.txt')
+    for x in lines:
+        avg = Main_Typing_Loop(x)
+    if avg >= 0:
+        print avg
